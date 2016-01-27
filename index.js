@@ -39,9 +39,9 @@ module.exports = {
             if (err)
               return done(err);
             connection[func](sql, params, function(err, rows, fields, numStatements) {
+            connection.end(); // this should be called before err, or the connection will be left open when there is an error!
               if (err)
                 return done(err);
-              connection.end();
               return done(null, rows, fields, numStatements);
             });
           });
